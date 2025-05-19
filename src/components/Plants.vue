@@ -1,9 +1,9 @@
 <!--
  * @Author: 张连登 17875477802@163.com
  * @Date: 2025-05-18 23:15:06
- * @LastEditors: 张连登 17875477802@163.com
- * @LastEditTime: 2025-05-18 23:37:14
- * @FilePath: \plant\src\components\Plants.vue
+ * @LastEditors: zld 17875477802@163.com
+ * @LastEditTime: 2025-05-19 09:18:03
+ * @FilePath: \plant\plant\src\components\Plants.vue
  * @Description: 
  * 
  * Copyright 2025 xingye/'zld', All Rights Reserved. 
@@ -38,7 +38,7 @@ import { ref } from 'vue';
 
 // 定义 emit
 const emit = defineEmits<{
-    (event: 'image-selected', index: number): void;
+    (event: 'image-selected', index: number, image: string): void;
 }>();
 const images = [
     "/image/ferti.png",
@@ -50,7 +50,7 @@ const selectedImage = ref<string>('')
 
 function handleSelect(index: number) {
     selectedImage.value = images[index];
-    emit("image-selected", index);
+    emit("image-selected", index,selectedImage.value);
 }
 
 
