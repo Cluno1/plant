@@ -1,8 +1,16 @@
 <!--
+ * @Author: zld 17875477802@163.com
+ * @Date: 2025-05-20 22:23:02
+ * @LastEditors: zld 17875477802@163.com
+ * @LastEditTime: 2025-05-20 23:52:03
+ * @FilePath: \plant\src\components\Plants.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
  * @Author: 张连登 17875477802@163.com
  * @Date: 2025-05-18 23:15:06
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-19 09:18:03
+ * @LastEditTime: 2025-05-20 23:51:23
  * @FilePath: \plant\plant\src\components\Plants.vue
  * @Description: 
  * 
@@ -11,14 +19,14 @@
 <template>
     <div class="w-64 mx-auto mt-10 flex justify-center flex-col">
         <!-- 显示选中的图片 -->
-        <div class="mb-4">
+        <!-- <div class="mb-4">
             <img v-if="selectedImage" :src="selectedImage" alt="Selected" class="w-full h-40 object-cover rounded" />
             <p v-else class="text-gray-500 text-center">select plant</p>
-        </div>
+        </div> -->
 
         <!-- 下拉菜单 -->
         <el-dropdown @command="handleSelect">
-            <el-button type="primary" class="w-full  flex-row">
+            <el-button type="primary" >
                 select plant
                 <el-icon><ArrowDown /></el-icon>
             </el-button>
