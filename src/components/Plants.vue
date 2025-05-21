@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-20 22:23:02
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-20 23:52:03
+ * @LastEditTime: 2025-05-22 00:28:00
  * @FilePath: \plant\src\components\Plants.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,14 +26,16 @@
 
         <!-- 下拉菜单 -->
         <el-dropdown @command="handleSelect">
-            <el-button type="primary" >
-                select plant
-                <el-icon><ArrowDown /></el-icon>
+            <el-button type="primary">
+                plants
+                <el-icon>
+                    <ArrowDown />
+                </el-icon>
             </el-button>
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item v-for="(image, index) in images" :key="index" :command="index">
-                        <img :src="image" alt="Option" class="w-20 h-20 object-cover rounded" />
+                        <img :src="image" alt="Option" class="image object-cover rounded" />
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </template>
@@ -49,16 +51,13 @@ const emit = defineEmits<{
     (event: 'image-selected', index: number, image: string): void;
 }>();
 const images = [
-    "/image/ferti.png",
-    "/image/pest.png",
-    "/image/sun.png",
-    "/image/tempr.png"
+    "/plants/1/1.png",
 ]
 const selectedImage = ref<string>('')
 
 function handleSelect(index: number) {
     selectedImage.value = images[index];
-    emit("image-selected", index,selectedImage.value);
+    emit("image-selected", index, selectedImage.value);
 }
 
 
@@ -66,5 +65,8 @@ function handleSelect(index: number) {
 </script>
 
 <style scoped>
-
+.image {
+    width: 6vw;
+    height: auto;
+}
 </style>

@@ -2,7 +2,7 @@
  * @Author: 张连登 17875477802@163.com
  * @Date: 2025-05-18 23:15:06
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-19 09:18:36
+ * @LastEditTime: 2025-05-21 19:24:15
  * @FilePath: \plant\plant\src\components\Tools.vue
  * @Description: 
  * 
@@ -11,9 +11,8 @@
 <template>
     <div class="mx-auto mt-10 flex justify-center flex-col items-center gap-9">
         <div v-for="(image, index) in images" @click='handleSelect(index)' :key="index">
-        <img  :src="image" alt="Option"
-            class="w-20 h-20 object-cover rounded"  />
-            
+            <img :src="image" alt="Option" class="image object-cover rounded" />
+
         </div>
     </div>
 </template>
@@ -26,16 +25,16 @@ const emit = defineEmits<{
     (event: 'image-selected', index: number, image: string): void;
 }>();
 const images = [
+    "/image/sun.png",
+    "/image/water.png",
     "/image/ferti.png",
     "/image/pest.png",
-    "/image/sun.png",
-    "/image/tempr.png"
 ]
 const selectedImage = ref<string>('')
 
 function handleSelect(index: number) {
     selectedImage.value = images[index];
-    emit("image-selected", index,selectedImage.value);
+    emit("image-selected", index, selectedImage.value);
 }
 
 
@@ -43,4 +42,9 @@ function handleSelect(index: number) {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.image {
+    width: 6vw;
+    height: auto;
+}
+</style>
