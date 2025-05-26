@@ -2,7 +2,7 @@
  * @Author: 张连登 17875477802@163.com
  * @Date: 2025-05-18 23:15:06
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-21 19:24:15
+ * @LastEditTime: 2025-05-27 00:14:59
  * @FilePath: \plant\plant\src\components\Tools.vue
  * @Description: 
  * 
@@ -25,10 +25,11 @@ const emit = defineEmits<{
     (event: 'image-selected', index: number, image: string): void;
 }>();
 const images = [
-    "/image/sun.png",
-    "/image/water.png",
-    "/image/ferti.png",
-    "/image/pest.png",
+    "/image/sunlight.jpg",
+    "/image/temperature.jpg",
+    "/image/water.jpg",
+    "/image/fertilizer.jpg",
+    "/image/bug spray.jpg",
 ]
 const selectedImage = ref<string>('')
 

@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-20 22:23:02
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-22 00:28:00
+ * @LastEditTime: 2025-05-27 00:22:19
  * @FilePath: \plant\src\components\Plants.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -51,13 +51,17 @@ const emit = defineEmits<{
     (event: 'image-selected', index: number, image: string): void;
 }>();
 const images = [
-    "/plants/1/1.png",
+    "/plants/1/1.jpg",
+    "/plants/2/1.jpg",
+    "/plants/3/1.jpg",
+    "/plants/4/1.jpg",
+    "/plants/5/1.jpg",
 ]
 const selectedImage = ref<string>('')
 
 function handleSelect(index: number) {
     selectedImage.value = images[index];
-    emit("image-selected", index, selectedImage.value);
+    emit("image-selected", index+1, selectedImage.value);
 }
 
 
