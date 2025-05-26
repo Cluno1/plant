@@ -2,8 +2,8 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-14 18:17:46
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-22 00:37:35
- * @FilePath: \plant\plant\src\App.vue
+ * @LastEditTime: 2025-05-26 17:36:15
+ * @FilePath: \plant\src\App.vue
  * @Description: 
  * 
  * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
@@ -101,44 +101,39 @@ function useAnimation() {
           repeat: 2,
         })
       }
-    } else {
+    } else {//其他动画
       const el = document.querySelector('.animated-img') as HTMLElement;
 
 
       if (el) {
-        gsap.set(el, { clearProps: 'all' }); // 清除所有内联样式
+        gsap.set(el, { clearProps: 'opacity,transform' }); // 清除所有内联样式
         gsap.killTweensOf(el);; // 清理之前的动画
+        gsap.set(el, { opacity: 0.8 })
 
-
-        gsap.set(el, { opacity: 0.5 });
         const tl = gsap.timeline();
-        tl.from(el, {
+        tl.fromTo(el, {
           opacity: 0,
           x: -300,
           y: tool.index * 100,
           width: 0,
           height: 0,
-          scale: 1,
+
+
+        }, {
+          opacity: 0.8,
+          width: '10vw',
+          height: 'auto',
+          y: 0,
+          x: 0,
           duration: 1.5,
           ease: 'power2.out'
-        });
-        tl.to(el, {
-          rotate: 90,
-          duration: 0.3,
         })
-        tl.to(el, {
-          rotate: 0,
-          duration: 0.3,
-        })
-        tl.to(el, {
-          rotate: 90,
-          duration: 0.3,
-        })
-        tl.to(el, {
-          rotate: 0,
-          duration: 0.3,
-          opacity: 0,
-        })
+
+        // 旋转动画序列
+        tl.to(el, { rotate: 90, duration: 0.3 })
+          .to(el, { rotate: 0, duration: 0.3 })
+          .to(el, { rotate: 90, duration: 0.3 })
+          .to(el, { rotate: 0, duration: 0.3, opacity: 0 });
       }
     }
 
@@ -162,16 +157,23 @@ function useAnimation() {
         <el-main>
           <div class="main-layout relative  flex flex-col bg-red-500  overflow-auto justify-center items-center">
             <div class="image-layout relative bg-blue-300 ">
+
               <!-- 太阳图 -->
               <img src="/image/sun.png" alt="sun" class="image sun-img absolute top-0 left-0 object-cover rounded" />
+
+
               <!-- 植物图 -->
               <img v-if="plant.image" :src="plant.image" alt="plant"
                 class="image absolute top-1/2 left-1/4 object-cover rounded" />
+
+
               <!-- 动画图 -->
               <img :src="tool.image" alt="tool"
-                class="animated-img image absolute top-1/4 left-1/4 z-10 object-cover rounded opacity-0" />
+                class="animated-img image absolute top-1/2 left-1/4 z-10 object-cover rounded opacity-0" />
+
+
               <!-- 效果图 -->
-              <img alt="Effect" class="effect-img image absolute  top-1/4 left-1/4 z-20  object-cover rounded opacity-0"
+              <img alt="Effect" class="effect-img image absolute top-1/2 left-1/4 z-20  object-cover rounded opacity-0"
                 src="/effect/1.png" />
             </div>
             <span class="mt-14">
