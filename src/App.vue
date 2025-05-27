@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-14 18:17:46
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-27 00:47:46
+ * @LastEditTime: 2025-05-28 00:36:00
  * @FilePath: \plant\src\App.vue
  * @Description: 
  * 
@@ -11,10 +11,12 @@
 <script setup lang="ts">
 import Plants from "./components/Plants.vue";
 import Tools from "./components/Tools.vue";
+import Card from "./components/Card.vue";
 import gsap from "gsap";
 import { ref, nextTick, watch, reactive, watchEffect } from "vue";
 import { ElMessage } from "element-plus";
-import { judgePeriod, type toolType } from "./utls/utl";
+import { getPlantDetail, judgePeriod, type toolType } from "./utls/utl";
+
 
 const tool = reactive<{
   image: string;
@@ -28,6 +30,9 @@ const tool = reactive<{
 const plant = reactive({
   image: "",
   index: -1, //该植物图片的种类 从 1 开始  1-5
+  name:'',
+  title:'',
+  detail:''
 });
 
 const data = reactive({
@@ -42,7 +47,7 @@ const data = reactive({
  * @param index
  * @param image
  */
-async function handleToolSelected(index: number, image: string) {
+function handleToolSelected(index: number, image: string) {
   if (!plant.image) {
     ElMessage.info("you can't use tool before selected any plant");
     return;
@@ -73,30 +78,37 @@ async function handleToolSelected(index: number, image: string) {
       break;
   }
 
-  await useAnimation();
+   useAnimation();
   const number2 = plant.image.split('/').pop()?.split('.')[0] as string
 
-  const res=judgePeriod(data,tool.name,plant.index,parseInt(number2, 10))//判断植物下一个阶段
+  const res = judgePeriod(data, tool.name, plant.index, parseInt(number2, 10))//判断植物下一个阶段
 
-  if(res.pest){
+    console.log(res,'judge')
+  if (res.pest) {
     //pest 动画
   }
-  if(res.shiny){
+  if (res.shiny) {
     //shiny 动画
     useShiny()
   }
-  plant.image=res.plantUrl
+  plant.image = res.plantUrl
 }
 /**
  * 植物选择
  * @param index
  * @param image
  */
-async function handlePlantSelected(index: number, image: string) {
+function handlePlantSelected(index: number, image: string) {
   console.log("plant url:", image);
   initData();
   plant.image = image;
-  plant.index = index + 1;
+  plant.index = index;
+  console.log(plant,'plant now choose')
+  
+  const res=getPlantDetail(plant.index)
+  plant.detail=res?.detail ?? ''
+  plant.title=res?.title ?? ''
+  plant.name=res?.name ?? ''
 }
 
 function initData() {
@@ -107,38 +119,78 @@ function initData() {
   data.tempr = 0;
 }
 
-function useShiny(){
+function useShiny() {
   nextTick(() => {
-    const el2 = document.querySelector(".shiny-img") as HTMLElement;
-    gsap.set(el2, { clearProps: "all" }); // 清除所有内联样式
-    gsap.set(el2,{opacity:1})
+    const el3 = document.querySelector(".shiny-img") as HTMLElement;
+    gsap.set(el3, { clearProps: "all" }); // 清除所有内联样式
+    gsap.set(el3, { opacity: 1 })
+    const tl = gsap.timeline();
 
-    gsap.from(el2,{
-      rotate:135,
+    tl.from(el3, {
+      opacity:0,
+      rotate: 135,
+      duration: 0.3,
+    })
+    .to(el3,{
+      opacity:0,
+      rotate:200,
       duration:1,
-      //todo
-   
+    })
+    .to(el3,{
+      opacity:1,
+      rotate:270,
+      duration:0.3,
+    }).to(el3,{
+      opacity:0,
+      rotate:360,
+      duration:1.2,
     })
   })
 }
 
 //实现工具动画的函数
-async function useAnimation() {
+function useAnimation() {
   nextTick(() => {
     // 动画逻辑
-    console.log(tool,'tool data')
-    if (tool.index == 0) {
+    console.log(tool, 'tool data')
+    if (tool.name == 'sun') {
       //太阳动画
       const el2 = document.querySelector(".sun-img") as HTMLElement;
       if (el2) {
         gsap.set(el2, { clearProps: "all" }); // 清除所有内联样式
         gsap.killTweensOf(el2); // 清理之前的动画
-
         gsap.to(el2, {
           rotate: 360,
           duration: 1,
           repeat: 2,
         });
+      }
+    } else if (tool.name == 'pest') {
+      const el = document.querySelector(".animated-img") as HTMLElement;
+
+      if (el) {
+        gsap.set(el, { clearProps: "all" }); // 清除所有内联样式
+        gsap.killTweensOf(el); // 清理之前的动画
+        gsap.set(el, { opacity: 0.8, y: -100,rotate: -40, });
+        const tl = gsap.timeline();
+        tl.from(
+          el,
+          {
+            opacity: 0,
+            x: -300,
+            y: tool.index * 100,
+            width: 0,
+            height: 0,
+          }
+
+        );
+
+        // 旋转动画序列
+        tl.to(el, { rotate: -140, duration: 0.3 })
+          .to(el, { rotate: 0, duration: 0.7 })
+          .to(el, { rotate: -140, duration: 0.3 })
+          .to(el, { rotate: 0, duration: 0.7, opacity: 0 });
+
       }
     } else {
       //其他动画
@@ -147,7 +199,7 @@ async function useAnimation() {
       if (el) {
         gsap.set(el, { clearProps: "all" }); // 清除所有内联样式
         gsap.killTweensOf(el); // 清理之前的动画
-        gsap.set(el, { opacity: 0.8,y:-100 });
+        gsap.set(el, { opacity: 0.8, y: -100 });
 
         const tl = gsap.timeline();
         tl.from(
@@ -164,13 +216,12 @@ async function useAnimation() {
 
         // 旋转动画序列
         tl.to(el, { rotate: 90, duration: 0.3 })
-          .to(el, { rotate: 0, duration: 0.3 })
+          .to(el, { rotate: 0, duration: 0.7 })
           .to(el, { rotate: 90, duration: 0.3 })
-          .to(el, { rotate: 0, duration: 0.3, opacity: 0 });
+          .to(el, { rotate: 0, duration: 0.7, opacity: 0 });
       }
     }
 
-    return Promise.resolve()
   });
 }
 </script>
@@ -178,54 +229,35 @@ async function useAnimation() {
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header
-        height="10vh"
-        class="flex flex-row justify-center items-center"
-      ></el-header>
+      <el-header height="35vh" class="flex flex-row justify-center items-center">
+      <Card :description="plant.detail" :title="plant.title" :image-index="plant.index"  />
+      </el-header>
       <el-container>
         <el-aside width="20vw" class="flex flex-row justify-center items-center">
-          <div class="w-full h-100 flex flex-col justify-start">
+          <!-- <div class="w-full h-100 flex flex-col justify-start"> -->
             <Tools @image-selected="handleToolSelected" />
-          </div>
+          <!-- </div> -->
         </el-aside>
         <el-main>
-          <div
-            class="main-layout relative flex flex-col bg-red-500 overflow-auto justify-center items-center"
-          >
-            <div class="image-layout relative bg-blue-300">
+          <div class="main-layout relative flex flex-col  overflow-auto justify-center items-center">
+            <div class="image-layout relative ">
               <!-- 太阳图 -->
-              <img
-                src="/image/sunlight.jpg"
-                alt="sun"
-                class="image sun-img absolute top-0 left-0 object-cover rounded"
-              />
+              <img src="/image/sunlight.jpg" alt="sun"
+                class="sun-img absolute top-0 left-0 object-cover rounded" />
 
               <!-- 植物图 -->
-              <img
-                v-if="plant.image"
-                :src="plant.image"
-                alt="plant"
-                class="image absolute top-1/2 left-1/4 object-cover rounded"
-              />
+              <img v-if="plant.image" :src="plant.image" alt="plant"
+                class="image absolute top-1/2 left-1/4 object-cover rounded" />
 
               <!-- 动画图 -->
-              <img
-                :src="tool.image"
-                alt="tool"
-                class="animated-img image absolute top-1/2 left-1/4 z-100 object-cover rounded opacity-0"
-              />
+              <img :src="tool.image" alt="tool"
+                class="animated-img image absolute top-1/2 left-1/4 z-100 object-cover rounded opacity-0" />
 
               <!-- 效果图 -->
-              <img
-                alt="shiny"
-                class="shiny-img image absolute top-1/2 left-1/4 z-20 object-cover rounded opacity-0"
-                src="/effect/1.png"
-              />
-              <img
-                alt="pest"
-                class="pest-img image absolute top-1/2 left-1/4 z-30 object-cover rounded opacity-0"
-                src="/effect/2.png"
-              />
+              <img alt="shiny" class="shiny-img image absolute top-1/2 left-1/4 z-20 object-cover rounded opacity-0"
+                src="/effect/1.png" />
+              <img alt="pest" class="pest-img image absolute top-1/2 left-1/4 z-30 object-cover rounded opacity-0"
+                src="/effect/2.png" />
             </div>
             <span class="mt-14">
               <p>sunshine:{{ data.sun }} h/day</p>
@@ -249,8 +281,12 @@ async function useAnimation() {
 </template>
 
 <style scoped>
-.image {
+.sun-img {
   width: 10vw;
+  height: auto;
+}
+.image {
+  width: 15vw;
   height: auto;
 }
 
