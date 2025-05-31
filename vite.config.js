@@ -8,7 +8,6 @@ export default defineConfig({
         vue(),
         tailwindcss(),
     ],
-     base: "/plant/",
      build: {
     outDir: "docs"
   }
