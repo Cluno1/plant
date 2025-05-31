@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-20 22:23:02
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-05-21 23:44:49
+ * @LastEditTime: 2025-05-31 21:17:24
  * @FilePath: \plant\README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
 ## image  
 - public
     - effect // 效果图
-        - 1.png//闪亮
+        - shiny.png//闪亮
         - 2.png //虫子
     - image //tool
         - ferti: 0,//施肥
