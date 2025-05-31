@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-14 18:17:46
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-06-01 03:29:17
+ * @LastEditTime: 2025-06-01 03:46:48
  * @FilePath: \plant\src\App.vue
  * @Description: 
  * 

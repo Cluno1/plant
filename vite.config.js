@@ -4,11 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        vue(),
-        tailwindcss(),
-    ],
-     build: {
-    outDir: "docs"
-  }
-});
+  plugins: [
+    vue(),
+    tailwindcss(),
+  ],
+  build: {
+    outDir: "docs",
+    assetsDir: "assets"  // 添加这一行
+  },
+  base: process.env.NODE_ENV === 'production' ? './' : '/',
+  publicDir: 'public'
+})
