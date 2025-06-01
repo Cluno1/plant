@@ -1,11 +1,11 @@
 import { ref } from "vue";
 const emit = defineEmits();
 const images = [
-    "/image/sun.png",
-    "/image/temper.png",
-    "/image/water.png",
-    "/image/ferti.png",
-    "/image/bug.png",
+    "image/sun.png",
+    "image/temper.png",
+    "image/water.png",
+    "image/ferti.png",
+    "image/bug.png",
 ];
 const selectedImage = ref("");
 function handleSelect(index) {

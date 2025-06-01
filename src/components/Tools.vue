@@ -25,11 +25,11 @@ const emit = defineEmits<{
   (event: "image-selected", index: number, image: string): void;
 }>();
 const images = [
-  "/image/sun.png",
-  "/image/temper.png",
-  "/image/water.png",
-  "/image/ferti.png",
-  "/image/bug.png",
+  "image/sun.png",
+  "image/temper.png",
+  "image/water.png",
+  "image/ferti.png",
+  "image/bug.png",
 ];
 const selectedImage = ref<string>("");
 
