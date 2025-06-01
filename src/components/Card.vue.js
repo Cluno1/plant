@@ -68,7 +68,7 @@ __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.d
     ...{ class: "image-container" },
 });
 __VLS_asFunctionalElement(__VLS_intrinsicElements.img)({
-    src: (__VLS_ctx.imageIndex > 0 ? `/plants/${__VLS_ctx.imageIndex}/3.jpg` : '/plants/1/3.jpg'),
+    src: (__VLS_ctx.imageIndex > 0 ? `plants/${__VLS_ctx.imageIndex}/3.jpg` : 'plants/1/3.jpg'),
     ...{ class: "card-image" },
     alt: "Card Image",
 });

@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-14 18:17:46
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-06-01 03:46:48
+ * @LastEditTime: 2025-06-01 08:48:28
  * @FilePath: \plant\src\App.vue
  * @Description: 
  * 
@@ -93,7 +93,7 @@ function handleToolSelected(index: number, image: string) {
     useShiny();
   }
   plant.image = res.plantUrl;
-  if(String(res.plantUrl).indexOf('4.jpg') !== -1){
+  if (String(res.plantUrl).indexOf('4.jpg') !== -1) {
     ElMessage.info('sorry but the plant deaded...maybe you can start plant again')
   }
 }
@@ -108,14 +108,14 @@ function handlePlantSelected(index: number, image: string) {
   plant.index = index;
   initData();
   const res = getPlantDetail(plant.index);
-  if(res){
- data.tempr = res.lowestTempr - 1;
-  data.sun = res.lowestSun - 1;
-  plant.detail = res?.detail ?? "";
-  plant.title = res?.title ?? "";
-  plant.name = res?.name ?? "";
+  if (res) {
+    data.tempr = res.lowestTempr - 1;
+    data.sun = res.lowestSun - 1;
+    plant.detail = res?.detail ?? "";
+    plant.title = res?.title ?? "";
+    plant.name = res?.name ?? "";
   }
- 
+
 }
 
 function initData() {
@@ -160,7 +160,7 @@ function useBug() {
 
       setTimeout(() => {
         useShiny();
-         ElMessage.success(plant.name+" is perfert !!");
+        ElMessage.success(plant.name + " is perfert !!");
       }, 1000);
     }
   });
@@ -285,69 +285,37 @@ function useAnimation() {
 <template>
   <div class="common-layout bg-green-50">
     <el-container>
-      <el-aside
-        width="20vw"
-        class="flex flex-row justify-start items-start mt-10"
-      >
+      <el-aside width="20vw" class="flex flex-row justify-start items-start mt-10">
         <!-- <div class="w-full h-100 flex flex-col justify-start"> -->
         <Tools @image-selected="handleToolSelected" />
         <!-- </div> -->
       </el-aside>
       <el-container>
-        <el-header
-          height="30vh"
-          class="flex flex-row justify-center items-center mt-4"
-        >
-          <Card
-            :description="plant.detail"
-            :title="plant.title"
-            :image-index="plant.index"
-          />
+        <el-header height="30vh" class="flex flex-row justify-center items-center mt-4">
+          <Card :description="plant.detail" :title="plant.title" :image-index="plant.index" />
         </el-header>
         <el-main>
           <div class="image-layout">
             <!-- 太阳图 -->
-            <img
-              src="/image/sun.png"
-              alt="sun"
-              class="sun-img absolute top-0 left-0 object-contain rounded"
-            />
+            <img src="/image/sun.png" alt="sun" class="sun-img absolute top-0 left-0 object-contain rounded" />
             <!-- temper -->
-            <img
-              src="/image/temper.png"
-              alt="tempr"
-              class="temper-img absolute top-5 right-5 object-contain rounded"
-            />
+            <img src="/image/temper.png" alt="tempr" class="temper-img absolute top-5 right-5 object-contain rounded" />
 
             <!-- 植物图 -->
-            <img
-              v-if="plant.image"
-              :src="plant.image"
-              alt="plant"
-              class="image plant-img absolute top-2/5 left-1/4 object-contain rounded"
-            />
-
+            <img v-if="plant.image" :src="plant.image" alt="plant"
+              class="image plant-img absolute top-2/5 left-1/4 object-contain rounded" />
 
             <!-- 动画图 -->
-            <img
-              :src="tool.image"
-              alt="tool"
-              class="animated-img absolute top-1/5 left-1/4 z-100 object-contain rounded opacity-0"
-            />
+            <img :src="tool.image" alt="tool"
+              class="animated-img absolute top-1/5 left-1/4 z-100 object-contain rounded opacity-0" />
 
             <!-- 效果图 -->
-            <img
-              alt="shiny"
-              class="image shiny-img absolute top-2/5 left-1/4 z-20 object-contain rounded opacity-0"
-              src="/effect/shiny-2.png"
-            />
-            <img
-              alt="bugs"
-              class="pest-img image absolute top-2/5 left-1/4 z-30 object-contain rounded opacity-0"
-              src="/effect/bugs.png"
-            />
+            <img alt="shiny" class="image shiny-img absolute top-2/5 left-1/4 z-20 object-contain rounded opacity-0"
+              src="/effect/shiny-2.png" />
+            <img alt="bugs" class="pest-img image absolute top-2/5 left-1/4 z-30 object-contain rounded opacity-0"
+              src="/effect/bugs.png" />
 
-            
+
           </div>
         </el-main>
       </el-container>
@@ -378,20 +346,25 @@ function useAnimation() {
   width: 10vw;
   height: auto;
 }
+
 .temper-img {
   width: 4vw;
 }
+
 .plant-img {
   transition: all 1s ease-out;
 }
+
 .image {
   width: 15vw;
   height: auto;
 }
+
 .animated-img {
   width: 10vw;
   height: 10vw;
 }
+
 .shiny-img {
   width: 17vw;
   height: auto;
@@ -403,9 +376,12 @@ function useAnimation() {
 }
 
 .declear-img {
-  background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
-  backdrop-filter: blur(10px); /* 模糊效果 */
-  -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+  background-color: rgba(255, 255, 255, 0.2);
+  /* 半透明背景 */
+  backdrop-filter: blur(10px);
+  /* 模糊效果 */
+  -webkit-backdrop-filter: blur(10px);
+  /* 兼容 Safari */
 
   /* 边框和圆角增强效果 */
   border-radius: 15px;
@@ -416,6 +392,7 @@ function useAnimation() {
 
   /* 隐藏滚动条 */
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -426,7 +403,8 @@ function useAnimation() {
 
 /* 悬停效果：阴影扩大+上浮 */
 .declear-img:hover {
-  transform: translateY(-4px); /* 轻微上浮 */
+  transform: translateY(-4px);
+  /* 轻微上浮 */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.281), 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
@@ -437,9 +415,12 @@ function useAnimation() {
   position: absolute;
 
   /* 磨砂玻璃效果 */
-  background-color: rgb(255, 255, 255); /* 半透明背景 */
-  backdrop-filter: blur(10px); /* 模糊效果 */
-  -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+  background-color: rgb(255, 255, 255);
+  /* 半透明背景 */
+  backdrop-filter: blur(10px);
+  /* 模糊效果 */
+  -webkit-backdrop-filter: blur(10px);
+  /* 兼容 Safari */
 
   /* 边框和圆角增强效果 */
   border-radius: 15px;
@@ -465,28 +446,29 @@ function useAnimation() {
     width: 25vw !important;
     left: 15% !important;
   }
+
   .animated-img {
     width: 18vw !important;
     height: 18vw !important;
   }
-  
+
   .shiny-img {
     width: 27vw !important;
   }
-  
+
   .pest-img {
     width: 25vw !important;
   }
-  
+
   .image-layout {
     width: 50vw;
     height: 65vh;
   }
-  
+
   .sun-img {
     width: 15vw;
   }
-  
+
   .temper-img {
     width: 8vw;
   }

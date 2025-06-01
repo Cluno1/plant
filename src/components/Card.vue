@@ -2,7 +2,7 @@
   <el-card class="responsive-card" :body-style="{ padding: '0', display: 'flex', height: '100%' }">
     <div class="card-content">
       <div class="image-container">
-        <img :src="imageIndex>0?`/plants/${imageIndex}/3.jpg`:'/plants/1/3.jpg'" class="card-image" alt="Card Image" />
+        <img :src="imageIndex>0?`plants/${imageIndex}/3.jpg`:'plants/1/3.jpg'" class="card-image" alt="Card Image" />
       </div>
       <div class="text-content">
         <h3 class="card-title">{{ title?title:'please choose plant' }}</h3>
