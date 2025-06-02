@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-14 18:17:46
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-06-01 08:48:28
+ * @LastEditTime: 2025-06-01 23:12:04
  * @FilePath: \plant\src\App.vue
  * @Description: 
  * 
@@ -48,7 +48,7 @@ const data = reactive({
  */
 function handleToolSelected(index: number, image: string) {
   if (!plant.image) {
-    ElMessage.info("you can't use tool before selected any plant");
+    ElMessage.info("You can't use tool before selected any plant.使用工具前需要选择你的植物");
     return;
   }
   tool.image = image;
@@ -94,7 +94,7 @@ function handleToolSelected(index: number, image: string) {
   }
   plant.image = res.plantUrl;
   if (String(res.plantUrl).indexOf('4.jpg') !== -1) {
-    ElMessage.info('sorry but the plant deaded...maybe you can start plant again')
+    ElMessage.info('Sorry，your plant has died, please start over. 抱歉，你的植物已死亡，请重新开始。')
   }
 }
 /**
@@ -283,18 +283,20 @@ function useAnimation() {
 </script>
 
 <template>
-  <div class="common-layout bg-green-50">
+  <div class="common-layout bg-green-200">
     <el-container>
-      <el-aside width="20vw" class="flex flex-row justify-start items-start mt-10">
+      <el-header height="30vh" class="flex flex-row justify-center items-center mt-4">
+          <Card :description="plant.detail" :title="plant.title" :image-index="plant.index" />
+        </el-header>
+      <el-container>
+        
+        <el-aside width="20vw" class="flex flex-row justify-start items-start mt-10">
         <!-- <div class="w-full h-100 flex flex-col justify-start"> -->
         <Tools @image-selected="handleToolSelected" />
         <!-- </div> -->
       </el-aside>
-      <el-container>
-        <el-header height="30vh" class="flex flex-row justify-center items-center mt-4">
-          <Card :description="plant.detail" :title="plant.title" :image-index="plant.index" />
-        </el-header>
-        <el-main>
+        <el-main >
+          <div class="main-contain">
           <div class="image-layout">
             <!-- 太阳图 -->
             <img src="/image/sun.png" alt="sun" class="sun-img absolute top-0 left-0 object-contain rounded" />
@@ -303,28 +305,21 @@ function useAnimation() {
 
             <!-- 植物图 -->
             <img v-if="plant.image" :src="plant.image" alt="plant"
-              class="image plant-img absolute top-2/5 left-1/4 object-contain rounded" />
+              class="image plant-img absolute top-2/7 left-1/4 object-contain rounded" />
 
             <!-- 动画图 -->
             <img :src="tool.image" alt="tool"
-              class="animated-img absolute top-1/5 left-1/4 z-100 object-contain rounded opacity-0" />
+              class="animated-img absolute top-1/7 left-1/4 z-100 object-contain rounded opacity-0" />
 
             <!-- 效果图 -->
-            <img alt="shiny" class="image shiny-img absolute top-2/5 left-1/4 z-20 object-contain rounded opacity-0"
+            <img alt="shiny" class="image shiny-img absolute top-2/7 left-1/4 z-20 object-contain rounded opacity-0"
               src="/effect/shiny-2.png" />
-            <img alt="bugs" class="pest-img image absolute top-2/5 left-1/4 z-30 object-contain rounded opacity-0"
+              
+            <img alt="bugs" class="pest-img image absolute top-2/7 left-1/4 z-30 object-contain rounded opacity-0"
               src="/effect/bugs.png" />
-
-
           </div>
-        </el-main>
-      </el-container>
-      <el-aside width="20vw" class="mt-10">
-        <div class="w-full flex flex-col justify-start gap-1.5">
-          <Plants @image-selected="handlePlantSelected" class="absolute" />
-          <span class="mt-40 declear-img p-1.5 pl-4">
-            <b>Record</b><br /><br />
-
+          <div class="mt-4 declear-img p-1.5 flex flex-col justify-center items-center">
+        
             <p>sunshine: <b>{{ data.sun }}</b> h/day</p>
             <br />
             <p>temperature: <b>{{ data.tempr }}</b> h/day</p>
@@ -334,21 +329,29 @@ function useAnimation() {
             <p>ferti: <b>{{ data.ferti }}</b> time/month</p>
             <br />
             <p>pest: <b>{{ data.pest }} </b>h/month</p>
-          </span>
+          </div>
+          </div>
+        </el-main>
+         <el-aside width="20vw" class="mt-10">
+        <div class="w-full flex flex-col justify-start gap-1.5">
+          <Plants @image-selected="handlePlantSelected" class="absolute" />
+          
         </div>
       </el-aside>
+      </el-container>
+     
     </el-container>
   </div>
 </template>
 
 <style scoped>
 .sun-img {
-  width: 10vw;
+  width: 8vw;
   height: auto;
 }
 
 .temper-img {
-  width: 4vw;
+  width: 3vw;
 }
 
 .plant-img {
@@ -376,43 +379,23 @@ function useAnimation() {
 }
 
 .declear-img {
-  background-color: rgba(255, 255, 255, 0.2);
-  /* 半透明背景 */
-  backdrop-filter: blur(10px);
-  /* 模糊效果 */
-  -webkit-backdrop-filter: blur(10px);
-  /* 兼容 Safari */
-
-  /* 边框和圆角增强效果 */
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-
-  /* 初始阴影（轻微立体感） */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
-
-  /* 隐藏滚动条 */
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* 悬停动画 */
-  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 254, 0.884);
+  min-height: 20vh;
+  min-width: 50vw;
 }
 
-/* 悬停效果：阴影扩大+上浮 */
-.declear-img:hover {
-  transform: translateY(-4px);
-  /* 轻微上浮 */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.281), 0 4px 8px rgba(0, 0, 0, 0.12);
+.main-contain {
+  min-height: 100vh;
+  overflow: visible;
 }
+
 
 .image-layout {
   height: 55vh;
-  width: 50vw;
+  min-width: 50vw;
   overflow: auto;
-  position: absolute;
+  position: relative;
+  margin-bottom: 2rem;
 
   /* 磨砂玻璃效果 */
   background-color: rgb(255, 255, 255);
@@ -437,7 +420,7 @@ function useAnimation() {
 }
 
 .common-layout {
-  height: 120vh;
+  height: 130vh;
 }
 
 /* 平板竖屏样式 */

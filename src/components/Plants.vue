@@ -2,7 +2,7 @@
  * @Author: zld 17875477802@163.com
  * @Date: 2025-05-20 22:23:02
  * @LastEditors: zld 17875477802@163.com
- * @LastEditTime: 2025-06-01 03:46:27
+ * @LastEditTime: 2025-06-01 23:26:10
  * @FilePath: \plant\src\components\Plants.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -27,7 +27,7 @@
         <!-- 下拉菜单 -->
         <el-dropdown @command="handleSelect">
             <el-button type="primary">
-                plants
+                植物
                 <el-icon>
                     <ArrowDown />
                 </el-icon>
@@ -35,11 +35,16 @@
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item v-for="(image, index) in images" :key="index" :command="index">
-                        <img :src="image" alt="Option" class="image object-cover rounded" />
+                        <!-- <img :src="image" alt="Option" class="image object-cover rounded" /> -->
+                        <p>{{ name[index] }}</p>
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </template>
         </el-dropdown>
+        <div class="w-6 mt-4">
+        <el-button type="primary" @click="handleRestart"  >重新开始</el-button>
+        </div>
+        
     </div>
 </template>
 
@@ -58,9 +63,19 @@ const images = [
   "plants/5/1.jpg",
 ]
 const selectedImage = ref<string>('')
+const Imgindex=ref(-1)
+
+const name=['strawberry','tomato','carrot','eggplant','sunflower',]
+
+function handleRestart(){
+    if(selectedImage.value){
+         emit("image-selected", Imgindex.value+1, selectedImage.value);
+    }
+}
 
 function handleSelect(index: number) {
     selectedImage.value = images[index];
+    Imgindex.value=index;
     emit("image-selected", index+1, selectedImage.value);
 }
 

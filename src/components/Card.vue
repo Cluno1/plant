@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .responsive-card {
-  width: 60vw;
+  width: 50vw;
   height: 30vh;
   max-width: 1200px;
   max-height: 800px;
